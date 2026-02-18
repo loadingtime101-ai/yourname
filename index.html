@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riyad ❤️ Lamia | Forever</title>
+<style>
+/* Reset and Deep Black Background */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{
+    height:100vh;
+    background: #000;
+    overflow:hidden;
+    color:white;
+}
+
+/* LOCK SCREEN */
+#lock{
+    position:fixed;inset:0;background:#000;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    z-index:999;
+}
+#lock h2 { margin-bottom: 20px; color: pink; letter-spacing: 2px; }
+#lock input{padding:12px;border-radius:8px;border:none;margin-top:10px; text-align: center; outline: none;}
+#lock button{margin-top:20px;padding:10px 30px;border:none;border-radius:20px;background:pink;cursor:pointer; font-weight: bold; transition: 0.3s;}
+#lock button:hover{transform: scale(1.1); box-shadow: 0 0 15px pink;}
+
+/* MAIN CONTAINER */
+#main{display:none;}
+
+/* TOP RIGHT COUPLE ANIME */
+.couple-top {
+    position: absolute; top: 15px; right: 15px;
+    width: 100px; height: 100px; z-index: 100;
+    filter: drop-shadow(0 0 10px rgba(255,192,203,0.8));
+    animation: shineAvatar 3s infinite alternate;
+}
+@keyframes shineAvatar {
+    from { filter: drop-shadow(0 0 5px pink); transform: scale(1); }
+    to { filter: drop-shadow(0 0 20px white); transform: scale(1.05); }
+}
+/* Visual Representation of the Couple */
+.avatar-box { position: relative; width: 100%; height: 100%; }
+.boy { position: absolute; bottom: 10px; right: 20px; width: 45px; height: 60px; background: #333; border-radius: 20px 20px 5px 5px; border-top: 3px solid #555; }
+.boy::before { content: "👓"; position: absolute; top: 10px; left: 8px; font-size: 15px; } /* Glasses */
+.girl { position: absolute; bottom: 10px; right: 45px; width: 40px; height: 55px; background: #ffb6c1; border-radius: 20px 20px 5px 5px; transform: rotate(-15deg); transform-origin: bottom; } /* Leaning on shoulder */
+
+/* HIGH QUALITY SHAKING STARS */
+.star{
+    position:absolute; background:white; border-radius:50%;
+    filter: blur(0.5px); box-shadow: 0 0 5px #fff;
+    animation: shakeStar var(--d) infinite ease-in-out;
+}
+@keyframes shakeStar {
+    0%, 100% { transform: translate(0,0); opacity: 0.3; }
+    50% { transform: translate(2px, 2px); opacity: 1; }
+}
+
+/* 3D SHAKING MOON */
+.moon{
+    position:absolute;top:40px;left:40px;
+    width:90px;height:90px;border-radius:50%;
+    background:#fffdeb;
+    box-shadow: inset -15px -10px 20px rgba(0,0,0,0.5), 0 0 40px rgba(255,255,255,0.3);
+    animation: moon3D 4s infinite ease-in-out;
+}
+@keyframes moon3D {
+    0%, 100% { transform: rotateY(15deg) rotateX(5deg); }
+    50% { transform: rotateY(-15deg) rotateX(-5deg) translate(5px, 5px); }
+}
+
+/* MOSQUE */
+.mosque{
+    position:absolute;bottom:0;width:100%;height:150px;
+    background:#000;
+    clip-path:polygon(0 100%,0 70%,10% 70%,15% 50%,20% 70%,30% 70%,35% 45%,40% 70%,50% 70%,55% 50%,60% 70%,70% 70%,75% 45%,80% 70%,90% 70%,100% 70%,100% 100%);
+    z-index: 5;
+}
+
+/* BIGGER 3D HEART */
+.scene{width:300px;height:300px;perspective:1000px;margin:auto;margin-top:60px;}
+.heart3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:spin 12s linear infinite;}
+.heart3d div{
+    position:absolute;width:100%;height:100%;
+    background:linear-gradient(135deg,#ff2d75,#ff9ad5);
+    clip-path:path("M150 280C20 190 0 140 0 80C0 0 80 0 150 75C220 0 300 0 300 80C300 140 280 190 150 280Z");
+    opacity:.95;
+    filter: drop-shadow(0 0 20px #ff2d75);
+}
+.heart3d div:nth-child(1){transform:translateZ(25px);}
+.heart3d div:nth-child(2){transform:translateZ(-25px);}
+@keyframes spin{from{transform:rotateY(0);}to{transform:rotateY(360deg);}}
+
+/* TEXT */
+.text{text-align:center;margin-top:20px; position: relative; z-index: 10;}
+h1{color:#ff9ad5;text-shadow:0 0 15px hotpink; font-size: 2rem;}
+#typing{margin-top:10px; font-weight: bold; min-height: 20px; color: #ffd6ff;}
+#countdown{margin-top:8px;color:#ffd6ff; font-size: 1.1rem; font-weight: bold;}
+
+/* LOVE LETTER OVERLAY */
+#letter{
+    position:fixed;inset:0;background:rgba(0,0,0,.95);
+    display:none;align-items:center;justify-content:center; z-index: 1000;
+}
+#box{
+    background:#111; padding:20px; border-radius:15px;
+    text-align:center; max-width:340px; border: 1px solid pink;
+    box-shadow: 0 0 30px rgba(255,182,193,0.3);
+}
+.letter-pics { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+.letter-pics img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; border: 1px solid pink; }
+
+#box button{margin-top:20px;padding:8px 25px;border:none;border-radius:20px;background:pink;cursor:pointer; font-weight: bold;}
+
+/* FLOAT EMOJIS */
+.float{position:absolute;bottom:-20px;animation:float 6s linear infinite; z-index: 2;}
+@keyframes float{from{transform:translateY(0);opacity:1;}to{transform:translateY(-100vh);opacity:0;}}
+</style>
+</head>
+<body>
+
+<div id="lock">
+    <h2>Enter Password 😚</h2>
+    <input type="password" id="pass">
+    <button onclick="unlock()">Unlock</button>
+</div>
+
+<div id="main">
+    <div class="couple-top">
+        <div class="avatar-box">
+            <div class="girl"></div>
+            <div class="boy"></div>
+            <p style="position:absolute; bottom:-15px; width:100%; text-align:center; font-size:10px; color:pink;">R & L</p>
+        </div>
+    </div>
+
+    <div class="moon"></div>
+    <div class="scene">
+        <div class="heart3d"><div></div><div></div></div>
+    </div>
+
+    <div class="text">
+        <h1>It's Our Anniversary ❤️</h1>
+        <h2>Riyad & Lamia</h2>
+        <div id="typing"></div>
+        <div id="countdown">Anniversary in: 365 Days</div>
+        <p onclick="openLetter()" style="cursor: pointer; margin-top: 20px; color: pink; text-decoration: underline; font-weight: bold;">Tap for A letter 💌</p>
+    </div>
+
+    <div class="mosque"></div>
+</div>
+
+<div id="letter">
+    <div id="box">
+        <h3 style="color:pink; margin-bottom:10px;">My Dear Lamia 💖</h3>
+        <p style="font-size: 14px; line-height: 1.5;">Lamia can you imagine it's our anniversary of three years where my heart discloses numerous  of prayers although we are not couple as Usual as the social perception but i know we are making our own composition.By consistently making our memories i am waiting for the last one. Waiting to makes you my only one rather than someone,who is humble but conscious, who has pure heart but idle , who is heavenly beautiful but mine stop thinking about  some silly fighting pretending on one knows none., i am thinking  for a long haul instead of some contamination. Here are some line goes like that<br>
+
+ <b>me tere liye chand taree tor neyi sakta<br>
+ me tere liye chand taree tor neyi sakta<br>
+
+ par tuje khus rakne k liyee uushattak chala ja sakta hu jo or koi neji ja sakta
+
+.</p>
+
+      <div class="letter-pics">
+    <img src="1.jpg" alt="Us 1">
+    <img src="2.jpg" alt="Us 2">
+    <img src="3.jpg" alt="Us 3">
+</div>
+
+        <button onclick="closeLetter()">Close</button>
+    </div>
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="tune.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const lock = document.getElementById('lock');
+const main = document.getElementById('main');
+const pass = document.getElementById('pass');
+const typing = document.getElementById('typing');
+const countdown = document.getElementById('countdown');
+const letter = document.getElementById('letter');
+
+function unlock(){
+    const music = document.getElementById("bgMusic");
+    if(pass.value === "iloveyou"){
+        lock.style.display = "none";
+        main.style.display = "block";
+        music.play().catch(e => console.log("Music file tune.mp3 missing in folder"));
+        createStars();
+        startTyping();
+    } else {
+        alert("Abar try koro 💔");
+    }
+}
+
+function startTyping(){
+    let msg="Every Ramadan with you is a blessing... ✨";
+    let i=0;
+    let timer = setInterval(()=>{
+        if(i < msg.length){
+            typing.innerHTML += msg.charAt(i);
+            i++;
+        } else { clearInterval(timer); }
+    },100);
+}
+
+// Fixed Anniversary Countdown logic
+function updateCountdown() {
+    // This shows 365 days as a starting point for your next journey
+    countdown.innerHTML = "Next Anniversary in: 365 Days 💕";
+}
+updateCountdown();
+
+function createStars(){
+    for(let i=0; i<80; i++){
+        let s = document.createElement("div");
+        s.className = "star";
+        let size = Math.random()*2 + 1;
+        s.style.width = size + "px";
+        s.style.height = size + "px";
+        s.style.left = Math.random()*100 + "vw";
+        s.style.top = Math.random()*100 + "vh";
+        s.style.setProperty('--d', (Math.random()*2 + 2) + 's');
+        document.body.appendChild(s);
+    }
+}
+
+function floatObj(char){
+    let s = document.createElement("div");
+    s.className = "float";
+    s.innerHTML = char;
+    s.style.left = Math.random()*100 + "vw";
+    s.style.fontSize = Math.random()*20+15+"px";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(), 6000);
+}
+setInterval(()=>floatObj("❤️"), 600);
+setInterval(()=>floatObj("🌙"), 1200);
+
+function openLetter(){ letter.style.display = "flex"; }
+function closeLetter(){ letter.style.display = "none"; }
+</script>
+
+</body>
+</html>
